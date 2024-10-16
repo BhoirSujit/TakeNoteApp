@@ -1,0 +1,9 @@
+.note {
+    height: 200px;
+    min-width: 150px;
+    cursor: pointer;
+}
+
+.note:hover {
+    border: 1px solid red;
+}
