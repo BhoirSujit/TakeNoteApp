@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { User } from "../models/user";
 import { useForm } from "react-hook-form";
 import { LoginCredentials } from "../api/notes_api";
 import * as NotesApi from "../api/notes_api";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Alert, Button, Form, Modal } from "react-bootstrap";
 import TextInputFeild from "./form/TextInputFeild";
-import styleUtils from "../styles/utils.module.css"
+import styleUtils from "../styles/utils.module.css";
+import { UnauthoriseError } from "../errors/http_errors";
 
 interface LoginModalProps {
   onDismiss: () => void;
@@ -13,6 +14,8 @@ interface LoginModalProps {
 }
 
 const LoginModal = (props: LoginModalProps) => {
+  const [errorText, setErrorText] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -24,7 +27,12 @@ const LoginModal = (props: LoginModalProps) => {
       const user = await NotesApi.login(credentials);
       props.onLoginSuccessful(user);
     } catch (error) {
-      alert(error);
+      if (error instanceof UnauthoriseError) {
+        setErrorText(error.message);
+      } else {
+        alert(error);
+      }
+
       console.error(error);
     }
   }
@@ -36,9 +44,10 @@ const LoginModal = (props: LoginModalProps) => {
       </Modal.Header>
 
       <Modal.Body>
+        {errorText && <Alert variant="danger">{errorText}</Alert>}
 
         <Form onSubmit={handleSubmit(onSubmit)}>
-        <TextInputFeild
+          <TextInputFeild
             name="username"
             label="Username"
             type="text"
@@ -48,7 +57,6 @@ const LoginModal = (props: LoginModalProps) => {
             error={errors.username}
           />
 
-          
           <TextInputFeild
             name="password"
             label="Password"
@@ -59,9 +67,9 @@ const LoginModal = (props: LoginModalProps) => {
             error={errors.password}
           />
           <Button
-          type="submit"
-          disabled={isSubmitting}
-          className={styleUtils.width100}
+            type="submit"
+            disabled={isSubmitting}
+            className={styleUtils.width100}
           >
             Sign Up
           </Button>
