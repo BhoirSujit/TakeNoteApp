@@ -1,8 +1,21 @@
 import { Note } from "../models/note";
 import { User } from "../models/user";
 
+export async function getLoggedInUser(): Promise<User> {
+  const response = await fetchData("http://localhost:5000/api/users", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  
+  return response.json();
+}
+
+
 async function fetchData(input: RequestInfo, init?: RequestInit) {
-  const response = await fetch(input, init);
+  const response = await fetch(input, {...init, credentials: 'include'});
+  console.log(response)
   if (response.ok) {
     return response;
   } else {
@@ -12,12 +25,7 @@ async function fetchData(input: RequestInfo, init?: RequestInit) {
   }
 }
 
-export async function getLoggedInUser(): Promise<User> {
-  const response = await fetchData("http://localhost:5000/api/users", {
-    method: "GET",
-  });
-  return response.json();
-}
+
 
 export interface SignUpCredentials {
   username: string;

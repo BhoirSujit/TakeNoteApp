@@ -8,10 +8,14 @@ import createHttpError, { isHttpError } from "http-errors";
 import session from "express-session";
 import env from "./util/validate"
 import MongoStore from "connect-mongo"
+import { requiresAuth } from "./middleware/auth";
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+origin: 'http://localhost:5173',
+  credentials: true,
+}));
 
 app.use(morgan("dev"));
 
@@ -31,7 +35,7 @@ app.use(session({
 }));
 
 app.use("/api/users", userRouter)
-app.use("/api/notes", notesRouter);
+app.use("/api/notes", requiresAuth,notesRouter);
 
 
 app.use((req, res, next) => {

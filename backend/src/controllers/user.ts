@@ -3,19 +3,17 @@ import createHttpError from "http-errors";
 import UserModel from "../models/user";
 import { compare, hash } from "bcrypt";
 
-
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
-    const authenticatedUser = req.session.userId;
-    try {
-        if (!authenticatedUser) throw createHttpError(401, "user not authenticated");
+  try {
+    const user = await UserModel.findById(req.session.userId)
+      .select("+email")
+      .exec();
 
-        const user = await UserModel.findById(authenticatedUser).select("+email").exec();
-
-        res.status(200).json(user)
-    } catch (error) {
-        next(error)
-    }
-}
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
 
 interface SignUpBody {
   username?: string;
@@ -94,23 +92,20 @@ export const logIn: RequestHandler<
     const passwordMatch = await compare(password, user.password);
     if (!passwordMatch) throw createHttpError(401, "Invalid password");
 
-
     req.session.userId = user._id;
 
-    res.status(200).json(user);
-
+    res.status(201).json(user);
   } catch (error) {
     next(error);
   }
 };
 
 export const logout: RequestHandler = async (req, res, next) => {
-    req.session.destroy(error => {
-        if (error) {
-            next(error);
-        }
-        else {
-            res.sendStatus(200);
-        }
-    })
-}
+  req.session.destroy((error) => {
+    if (error) {
+      next(error);
+    } else {
+      res.sendStatus(200);
+    }
+  });
+};

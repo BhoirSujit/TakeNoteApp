@@ -21,14 +21,13 @@ function App() {
         setLoggedInUser(user);
       } catch (error) {
         console.error(error);
-
       }
     }
     fetchLoggedUser();
   }, []);
 
   return (
-    <>
+    <div>
       <NavBar
         loggedInUser={loggedInUser}
         onLoginClicked={() => {
@@ -41,27 +40,33 @@ function App() {
       />
       <Container className={styles.notesPage}>
         <>
-          {loggedInUser 
-          ? <NotePageLoggedInView /> 
-          : <NotePageLoggedOutView />}
+          {loggedInUser ? <NotePageLoggedInView /> : <NotePageLoggedOutView />}
         </>
-
-        {showSignUpModal && (
-          <SignUpModel onDismiss={() => {setShowSignUpModal(false)}} 
-          onSignUpSuccessful={(user) => {setLoggedInUser(user);
+      </Container>
+      {showSignUpModal && (
+        <SignUpModel
+          onDismiss={() => {
             setShowSignUpModal(false);
-          }} />
-        )}
+          }}
+          onSignUpSuccessful={(user) => {
+            setLoggedInUser(user);
+            setShowSignUpModal(false);
+          }}
+        />
+      )}
 
-        {showLoginModal && (
-          <LoginModel onDismiss={() => {setShowLoginModal(false)}} 
+      {showLoginModal && (
+        <LoginModel
+          onDismiss={() => {
+            setShowLoginModal(false);
+          }}
           onLoginSuccessful={(user) => {
             setLoggedInUser(user);
             setShowLoginModal(false);
-          }} />
-        )}
-      </Container>
-    </>
+          }}
+        />
+      )}
+    </div>
   );
 }
 
