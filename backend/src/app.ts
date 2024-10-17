@@ -13,12 +13,7 @@ import { requiresAuth } from "./middleware/auth";
 const app = express();
 
 app.use(
-  cors({
-    origin: "https://takenoteapp.onrender.com", // Ensure correct origin
-    credentials: true, // Allow cookies and credentials
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"], // Explicitly mention allowed methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Define allowed headers
-  })
+  cors()
 );
 
 app.use(morgan("dev"));
