@@ -4,13 +4,22 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  build: {
+    outDir: 'build', // This ensures the build output is in a folder named 'build'
+  },
   server: {
     proxy: {
-      '/api': {
-        target: 'http://localhost:5000',  // Your backend URL
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')  // Rewrite if necessary
-      }
-    }
+      '/api': 'http://localhost:5000', // Proxy API requests
+    },
+  },
+  // Add this line to ensure SPA routing works on Render or other hosts:
+  resolve: {
+    alias: {
+      '@': '/src',
+    },
+  },
+  // Enable fallback for react-router-dom (for SPA routing)
+  esbuild: {
+    jsxInject: `import React from 'react'`,
   }
 })
