@@ -1,4 +1,4 @@
-import React from "react";
+
 import { User } from "../models/user";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import NavBarLoggedInView from "./NavBarLoggedInView";

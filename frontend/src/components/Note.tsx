@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Note as NoteModel } from "../models/note";
 import { Card } from "react-bootstrap";
 import styles from "../styles/Note.module.css";

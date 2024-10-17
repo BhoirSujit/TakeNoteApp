@@ -16,7 +16,7 @@ import AboutPage from "./pages/AboutPage";
 
 
 function App() {
-  const [loggedInUser, setLoggedInUser] = useState<User>();
+  const [loggedInUser, setLoggedInUser] = useState<User | null>();
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
 

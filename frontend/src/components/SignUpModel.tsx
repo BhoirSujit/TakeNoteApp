@@ -1,4 +1,4 @@
-import React from "react";
+
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { SignUpCredentials } from "../api/notes_api";
@@ -7,6 +7,7 @@ import { Modal, Form, Button, Alert } from "react-bootstrap";
 import TextInputFeild from "./form/TextInputFeild";
 import styleUtils from "../styles/utils.module.css"
 import { ConflictError } from "../errors/http_errors";
+import { User } from "../models/user";
 
 interface SignUpModelProps {
   onDismiss: () => void;

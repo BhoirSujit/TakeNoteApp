@@ -4,9 +4,11 @@ import { FieldError, RegisterOptions, UseFormRegister } from "react-hook-form";
 interface TextInputFeildProps {
   name: string;
   label: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: UseFormRegister<any>;
   registerOptions?: RegisterOptions;
   error?: FieldError;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [x: string]: any;
 }
 

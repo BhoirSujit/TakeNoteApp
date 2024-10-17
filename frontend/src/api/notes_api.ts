@@ -3,7 +3,7 @@ import { Note } from "../models/note";
 import { User } from "../models/user";
 
 export async function getLoggedInUser(): Promise<User> {
-  const response = await fetchData("http://localhost:5000/api/users", {
+  const response = await fetchData(import.meta.env.VITE_BACKEND+"/api/users", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -38,7 +38,7 @@ export interface SignUpCredentials {
 }
 
 export async function signUp(credentials: SignUpCredentials): Promise<User> {
-  const response = await fetchData("http://localhost:5000/api/users/signup", {
+  const response = await fetchData(import.meta.env.VITE_BACKEND+"/api/users/signup", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -54,7 +54,7 @@ export interface LoginCredentials {
 }
 
 export async function login(credentials: LoginCredentials): Promise<User> {
-  const response = await fetchData("http://localhost:5000/api/users/login", {
+  const response = await fetchData(import.meta.env.VITE_BACKEND+"/api/users/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -65,11 +65,11 @@ export async function login(credentials: LoginCredentials): Promise<User> {
 } 
 
 export async function logout() {
-  await fetchData("http://localhost:5000/api/users/logout", {method: "POST"})
+  await fetchData(import.meta.env.VITE_BACKEND+"/api/users/logout", {method: "POST"})
 }
 
 export async function fetchNote(): Promise<Note[]> {
-  const response = await fetchData("http://localhost:5000/api/notes", {
+  const response = await fetchData(import.meta.env.VITE_BACKEND+"/api/notes", {
     method: "GET",
   });
 
@@ -82,7 +82,7 @@ export interface NoteInput {
 }
 
 export async function createNote(note: NoteInput): Promise<Note> {
-  const response = await fetchData("http://localhost:5000/api/notes", {
+  const response = await fetchData(import.meta.env.VITE_BACKEND+"/api/notes", {
     method: "POST",
     headers: {
       "Content-type": "application/json",
@@ -94,7 +94,7 @@ export async function createNote(note: NoteInput): Promise<Note> {
 }
 
 export async function deleteNote(noteId: string) {
-  await fetchData("http://localhost:5000/api/notes/" + noteId, {
+  await fetchData(import.meta.env.VITE_BACKEND+"/api/notes/" + noteId, {
     method: "DELETE",
   });
 }
@@ -104,7 +104,7 @@ export async function updateNote(
   note: NoteInput
 ): Promise<Note> {
   const response = await fetchData(
-    "http://localhost:5000/api/notes/" + noteId,
+    import.meta.env.VITE_BACKEND+"/api/notes/" + noteId,
     {
       method: "PATCH",
       headers: {

@@ -17,7 +17,7 @@ const NotePageLoggedInView = () => {
   const [showNotesLoadingError, setShowNotesLoadingError] = useState(false);
 
   const [showAddNoteDialog, setShowAddNoteDialog] = useState(false);
-  const [noteToEdit, setNoteToEdit] = useState<NoteModel>(null);
+  const [noteToEdit, setNoteToEdit] = useState<NoteModel | null>(null);
 
   useEffect(() => {
     async function loadNotes() {

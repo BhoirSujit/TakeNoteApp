@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { User } from "../models/user";
 import { useForm } from "react-hook-form";
 import { LoginCredentials } from "../api/notes_api";
@@ -71,7 +71,7 @@ const LoginModal = (props: LoginModalProps) => {
             disabled={isSubmitting}
             className={styleUtils.width100}
           >
-            Sign Up
+            Log In
           </Button>
         </Form>
       </Modal.Body>
