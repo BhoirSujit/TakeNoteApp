@@ -3,6 +3,7 @@ import { Note } from "../models/note";
 import { useForm } from "react-hook-form";
 import { NoteInput } from "../api/notes_api";
 import * as NotesApi from "../api/notes_api";
+import TextInputFeild from "./form/TextInputFeild";
 
 interface AddEditNoteDialogProps {
   noteToEdit?: Note;
@@ -43,42 +44,36 @@ const AddEditNoteDialog = ({
   }
 
   return (
-    <Modal show onHide={onDismiss}>
-      <Modal.Header>
+    <Modal  show onHide={onDismiss}>
+      <Modal.Header closeButton>
         <Modal.Title>{noteToEdit ? "Edit Note" : "Add Note"}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
         <Form id="addEditNoteForm" onSubmit={handleSubmit(onSubmit)}>
-          <FormGroup className="mb-3">
-            <Form.Label>Title</Form.Label>
-            <Form.Control
-              {...register("title", { required: "Required" })}
-              type="text"
-              placeholder="Title"
-              isInvalid={!!errors.title}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.title?.message}
-            </Form.Control.Feedback>
-          </FormGroup>
+          <TextInputFeild
+            name="title"
+            label="Title"
+            type="text"
+            placeholder="Title"
+            register={register}
+            registerOptions={{ required: "Required" }}
+            error={errors.title}
+          />
 
-          <FormGroup className="mb-3">
-            <Form.Label>Text</Form.Label>
-            <Form.Control
-              {...register("text")}
-              as="textarea"
-              rows={5}
-              placeholder="Text"
-            />
-          </FormGroup>
+          <TextInputFeild
+            name="text"
+            label="Text"
+            as="textarea"
+            rows={5}
+            placeholder="Text"
+            register={register}
+          />
         </Form>
       </Modal.Body>
 
       <Modal.Footer>
-        <Button type="submit" 
-        form="addEditNoteForm" 
-        disabled={isSubmitting}>
+        <Button type="submit" form="addEditNoteForm" disabled={isSubmitting}>
           Save
         </Button>
       </Modal.Footer>
