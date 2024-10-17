@@ -14,8 +14,10 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://takenoteapp.onrender.com",
-    credentials: true,
+    origin: "https://takenoteapp.onrender.com", // Ensure correct origin
+    credentials: true, // Allow cookies and credentials
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"], // Explicitly mention allowed methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Define allowed headers
   })
 );
 
@@ -30,6 +32,9 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 60 * 60 * 1000,
+    
+      httpOnly: true, // Prevent access from JavaScript (security best practice)
+      sameSite: "none", // Required for cross-origin cookies
     },
     rolling: true,
     store: MongoStore.create({

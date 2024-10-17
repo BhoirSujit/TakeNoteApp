@@ -7,11 +7,6 @@ export default defineConfig({
   build: {
     outDir: 'build', // This ensures the build output is in a folder named 'build'
   },
-  server: {
-    proxy: {
-      '/api': 'http://localhost:5000', // Proxy API requests
-    },
-  },
   // Add this line to ensure SPA routing works on Render or other hosts:
   resolve: {
     alias: {
