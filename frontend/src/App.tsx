@@ -11,6 +11,8 @@ import NotesPage from "./pages/NotesPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import styles from "./styles/App.module.css"
+import Footer from "./components/Footer";
+import AboutPage from "./pages/AboutPage";
 
 
 function App() {
@@ -50,11 +52,15 @@ function App() {
               element={<NotesPage loggedInUser={loggedInUser} />}
             />
 
+            <Route path="/about" element={<AboutPage/>} />
             <Route path="/privacy" element={<PrivacyPage />} />
 
             <Route path="/*" element={<NotFoundPage />} />
           </Routes>
         </Container>
+
+          <Footer/>
+
         {showSignUpModal && (
           <SignUpModel
             onDismiss={() => {
