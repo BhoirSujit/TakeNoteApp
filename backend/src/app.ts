@@ -1,42 +1,45 @@
 import express, { NextFunction, Request, Response } from "express";
 import notesRouter from "./routes/notes";
-import userRouter from "./routes/user"
+import userRouter from "./routes/user";
 import morgan from "morgan";
 import "dotenv/config";
-import cors from 'cors';
+import cors from "cors";
 import createHttpError, { isHttpError } from "http-errors";
 import session from "express-session";
-import env from "./util/validate"
-import MongoStore from "connect-mongo"
+import env from "./util/validate";
+import MongoStore from "connect-mongo";
 import { requiresAuth } from "./middleware/auth";
 
 const app = express();
 
-app.use(cors({
-origin: '*',
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: "https://takenoteapp.onrender.com",
+    credentials: true,
+  })
+);
 
 app.use(morgan("dev"));
 
 app.use(express.json());
 
-app.use(session({
-  secret: env.SESSION_SECREAT,
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    maxAge: 60 * 60 * 1000,
-  },
-  rolling: true,
-  store: MongoStore.create({
-    mongoUrl: env.MONGO_CONNECTING_STRING,
+app.use(
+  session({
+    secret: env.SESSION_SECREAT,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 60 * 60 * 1000,
+    },
+    rolling: true,
+    store: MongoStore.create({
+      mongoUrl: env.MONGO_CONNECTING_STRING,
+    }),
   })
-}));
+);
 
-app.use("/api/users", userRouter)
-app.use("/api/notes", requiresAuth,notesRouter);
-
+app.use("/api/users", userRouter);
+app.use("/api/notes", requiresAuth, notesRouter);
 
 app.use((req, res, next) => {
   next(createHttpError(404, "Endpoint not found"));
