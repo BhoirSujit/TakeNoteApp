@@ -13,17 +13,24 @@ import { requiresAuth } from "./middleware/auth";
 const app = express();
 
 app.use(
-  cors()
+  cors({
+    origin: "https://takenoteapp.onrender.com", // Explicit origin
+    credentials: true, // Allow sending cookies and credentials
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"], // Allow these methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Explicitly allow these headers
+  })
 );
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With,Content-Type,Accept'
-  );
-  next();
+app.options("*", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "https://takenoteapp.onrender.com"); // Match the frontend origin
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS"); // Allowed methods
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization"); // Allowed headers
+  res.header("Access-Control-Allow-Credentials", "true"); // Credentials allowed
+  res.sendStatus(204); // Send no content status for OPTIONS
 });
+
+
+
 
 app.use(morgan("dev"));
 
