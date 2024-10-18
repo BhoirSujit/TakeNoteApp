@@ -14,20 +14,13 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://takenoteapp.onrender.com", // Explicit origin
-    credentials: true, // Allow sending cookies and credentials
+    origin: ["https://takenoteapp.onrender.com", "http://localhost:5173/"], 
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"], // Allow these methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Explicitly allow these headers
+    allowedHeaders: ["Content-Type", "Authorization", "userId"], // Explicitly allow these headers
   })
 );
 
-app.options("*", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "https://takenoteapp.onrender.com"); // Match the frontend origin
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS"); // Allowed methods
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization"); // Allowed headers
-  res.header("Access-Control-Allow-Credentials", "true"); // Credentials allowed
-  res.sendStatus(204); // Send no content status for OPTIONS
-});
 
 
 
