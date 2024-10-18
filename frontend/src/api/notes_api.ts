@@ -9,6 +9,7 @@ export async function getLoggedInUser(): Promise<User> {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': 'https://takenote-backend-b177.onrender.com/',
       },
     }
   );
@@ -50,6 +51,7 @@ export async function signUp(credentials: SignUpCredentials): Promise<User> {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': 'https://takenote-backend-b177.onrender.com/',
       },
       body: JSON.stringify(credentials),
     }
@@ -69,6 +71,7 @@ export async function login(credentials: LoginCredentials): Promise<User> {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': 'https://takenote-backend-b177.onrender.com/',
       },
       body: JSON.stringify(credentials),
     }
@@ -89,6 +92,7 @@ export async function fetchNote(): Promise<Note[]> {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': 'https://takenote-backend-b177.onrender.com/',
       },
     }
   );
@@ -108,6 +112,7 @@ export async function createNote(note: NoteInput): Promise<Note> {
       method: "POST",
       headers: {
         "Content-type": "application/json",
+        'Access-Control-Allow-Origin': 'https://takenote-backend-b177.onrender.com/',
       },
       body: JSON.stringify(note),
     }
@@ -121,6 +126,7 @@ export async function deleteNote(noteId: string) {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
+      'Access-Control-Allow-Origin': 'https://takenote-backend-b177.onrender.com/', 
     },
   });
 }
@@ -135,6 +141,7 @@ export async function updateNote(
       method: "PATCH",
       headers: {
         "Content-type": "application/json",
+        'Access-Control-Allow-Origin': 'https://takenote-backend-b177.onrender.com/',
       },
       body: JSON.stringify(note),
     }
