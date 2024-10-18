@@ -12,14 +12,10 @@ import { requiresAuth } from "./middleware/auth";
 
 const app = express();
 
-app.use(
-  cors({
-    origin: ["https://takenoteapp.onrender.com", "http://localhost:5173/"], 
+app.use(cors({
+  origin: ['http://localhost:5173','https://takenote-backend-b177.onrender.com'],
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"], // Allow these methods
-    allowedHeaders: ["Content-Type", "Authorization", "userId"], // Explicitly allow these headers
-  })
-);
+  }));
 
 
 
@@ -29,23 +25,18 @@ app.use(morgan("dev"));
 
 app.use(express.json());
 
-app.use(
-  session({
-    secret: env.SESSION_SECREAT,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 60 * 60 * 1000,
-    
-      httpOnly: true, // Prevent access from JavaScript (security best practice)
-      sameSite: "none", // Required for cross-origin cookies
-    },
-    rolling: true,
-    store: MongoStore.create({
-      mongoUrl: env.MONGO_CONNECTING_STRING,
-    }),
+app.use(session({
+  secret: env.SESSION_SECREAT,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 60 * 60 * 1000,
+  },
+  rolling: true,
+  store: MongoStore.create({
+    mongoUrl: env.MONGO_CONNECTING_STRING,
   })
-);
+}));
 
 app.use("/api/users", userRouter);
 app.use("/api/notes", requiresAuth, notesRouter);
