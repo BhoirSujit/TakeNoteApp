@@ -13,7 +13,7 @@ import { requiresAuth } from "./middleware/auth";
 const app = express();
 
 app.use(cors({
-  origin: ['http://localhost:5173','https://takenote-backend-b177.onrender.com'],
+  origin: ['http://localhost:5173','https://takenoteapp.onrender.com'],
     credentials: true,
   }));
 
