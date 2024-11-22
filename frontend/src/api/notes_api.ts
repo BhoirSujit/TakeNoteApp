@@ -2,17 +2,16 @@ import { ConflictError, UnauthoriseError } from "../errors/http_errors";
 import { Note } from "../models/note";
 import { User } from "../models/user";
 
+const BASE_URL =
+  import.meta.env.MODE === "development" ? "http://localhost:5000" : "";
+
 export async function getLoggedInUser(): Promise<User> {
-  const response = await fetchData(
-    import.meta.env.VITE_BACKEND + "/api/users",
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        'Access-Control-Allow-Origin': 'https://takenote-backend-b177.onrender.com/',
-      },
-    }
-  );
+  const response = await fetchData(BASE_URL + "/api/users", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
   return response.json();
 }
@@ -45,17 +44,13 @@ export interface SignUpCredentials {
 }
 
 export async function signUp(credentials: SignUpCredentials): Promise<User> {
-  const response = await fetchData(
-    import.meta.env.VITE_BACKEND + "/api/users/signup",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        'Access-Control-Allow-Origin': 'https://takenote-backend-b177.onrender.com/',
-      },
-      body: JSON.stringify(credentials),
-    }
-  );
+  const response = await fetchData(BASE_URL + "/api/users/signup", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  });
   return response.json();
 }
 
@@ -65,37 +60,32 @@ export interface LoginCredentials {
 }
 
 export async function login(credentials: LoginCredentials): Promise<User> {
-  const response = await fetchData(
-    import.meta.env.VITE_BACKEND + "/api/users/login",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        'Access-Control-Allow-Origin': 'https://takenote-backend-b177.onrender.com/',
-      },
-      body: JSON.stringify(credentials),
-    }
-  );
+  const response = await fetchData(BASE_URL + "/api/users/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  });
   return response.json();
 }
 
 export async function logout() {
-  await fetchData(import.meta.env.VITE_BACKEND + "/api/users/logout", {
+  await fetchData(BASE_URL + "/api/users/logout", {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 }
 
 export async function fetchNote(): Promise<Note[]> {
-  const response = await fetchData(
-    import.meta.env.VITE_BACKEND + "/api/notes",
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        'Access-Control-Allow-Origin': 'https://takenote-backend-b177.onrender.com/',
-      },
-    }
-  );
+  const response = await fetchData(BASE_URL + "/api/notes", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
   return response.json();
 }
@@ -106,27 +96,22 @@ export interface NoteInput {
 }
 
 export async function createNote(note: NoteInput): Promise<Note> {
-  const response = await fetchData(
-    import.meta.env.VITE_BACKEND + "/api/notes",
-    {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        'Access-Control-Allow-Origin': 'https://takenote-backend-b177.onrender.com/',
-      },
-      body: JSON.stringify(note),
-    }
-  );
+  const response = await fetchData(BASE_URL + "/api/notes", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(note),
+  });
 
   return response.json();
 }
 
 export async function deleteNote(noteId: string) {
-  await fetchData(import.meta.env.VITE_BACKEND + "/api/notes/" + noteId, {
+  await fetchData(BASE_URL + "/api/notes/" + noteId, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      'Access-Control-Allow-Origin': 'https://takenote-backend-b177.onrender.com/', 
     },
   });
 }
@@ -135,17 +120,13 @@ export async function updateNote(
   noteId: string,
   note: NoteInput
 ): Promise<Note> {
-  const response = await fetchData(
-    import.meta.env.VITE_BACKEND + "/api/notes/" + noteId,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-type": "application/json",
-        'Access-Control-Allow-Origin': 'https://takenote-backend-b177.onrender.com/',
-      },
-      body: JSON.stringify(note),
-    }
-  );
+  const response = await fetchData(BASE_URL + "/api/notes/" + noteId, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(note),
+  });
 
   return response.json();
 }

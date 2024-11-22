@@ -4,10 +4,13 @@
   "main": "dist/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/server.ts",
-    "lint": "eslint src --ext .ts"
+    "dev": "nodemon src/server.ts",
+    "lint": "eslint src --ext .ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
   },
   "keywords": [],
+  "type": "module",
   "author": "",
   "license": "ISC",
   "description": "",
@@ -41,6 +44,7 @@
     "express-session": "^1.18.1",
     "http-errors": "^2.0.0",
     "mongoose": "^8.7.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "takenoteapp": "file:.."
   }
 }

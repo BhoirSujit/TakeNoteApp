@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import createHttpError from "http-errors";
-import UserModel from "../models/user";
+import UserModel from "../models/user.js";
 import { compare, hash } from "bcrypt";
 
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {

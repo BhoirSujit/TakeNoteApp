@@ -1,8 +1,8 @@
 import { NextFunction, RequestHandler, Response, Request } from "express";
-import NoteModel from "../models/note";
+import NoteModel from "../models/note.js";
 import createHttpError from "http-errors";
 import mongoose from "mongoose";
-import { asserisDefined } from "../util/asserisDefined";
+import { asserisDefined } from "../util/asserisDefined.js";
 
 export const getNotes: RequestHandler = async (
   req: Request,

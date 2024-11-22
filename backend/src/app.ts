@@ -1,42 +1,35 @@
 import express, { NextFunction, Request, Response } from "express";
-import notesRouter from "./routes/notes";
-import userRouter from "./routes/user";
+import notesRouter from "./routes/notes.js";
+import userRouter from "./routes/user.js";
 import morgan from "morgan";
 import "dotenv/config";
+import dotenv from "dotenv";
+dotenv.config();
 import cors from "cors";
 import createHttpError, { isHttpError } from "http-errors";
 import session from "express-session";
-import env from "./util/validate";
+import env from "./util/validate.js";
 import MongoStore from "connect-mongo";
-import { requiresAuth } from "./middleware/auth";
+import { requiresAuth } from "./middleware/auth.js";
 import cookieParser from "cookie-parser";
+import path from "path";
+
+const __dirname = path.resolve();
 
 const app = express();
 
-app.use(
-  cors({
-    origin: ["http://localhost:5173", "https://takenoteapp.onrender.com"],
-    credentials: true,
-  })
-);
-
-app.use((req, res, next) => {
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    "https://takenoteapp.onrender.com"
-  );
-  res.setHeader("Access-Control-Allow-Methods", "*");
-  res.setHeader("Access-Control-Allow-Headers", "*");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  next();
-});
-
 // Use cookies
+app.use(express.json());
 app.use(cookieParser());
 
 app.use(morgan("dev"));
 
-app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 app.use(
   session({
@@ -56,9 +49,21 @@ app.use(
 app.use("/api/users", userRouter);
 app.use("/api/notes", requiresAuth, notesRouter);
 
-app.use((req, res, next) => {
-  next(createHttpError(404, "Endpoint not found"));
-});
+
+
+
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  console.log("front end path : ",path.join(__dirname, "../frontend/dist"));
+
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+  });  
+}
+
+
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
