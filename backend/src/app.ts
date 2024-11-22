@@ -6,7 +6,7 @@ import "dotenv/config";
 import dotenv from "dotenv";
 dotenv.config();
 import cors from "cors";
-import createHttpError, { isHttpError } from "http-errors";
+import { isHttpError } from "http-errors";
 import session from "express-session";
 import env from "./util/validate.js";
 import MongoStore from "connect-mongo";
@@ -14,7 +14,7 @@ import { requiresAuth } from "./middleware/auth.js";
 import cookieParser from "cookie-parser";
 import path from "path";
 
-const __dirname = path.resolve();
+
 
 const app = express();
 
@@ -51,15 +51,15 @@ app.use("/api/notes", requiresAuth, notesRouter);
 
 
 
-
+const __dirname = path.resolve();
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
-  console.log("front end path : ",path.join(__dirname, "../frontend/dist"));
+  app.use(express.static(path.join(__dirname, "../../frontend/dist")));
+  console.log("front end path : ",path.join(__dirname, "../../frontend/dist"));
 
 
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+    res.sendFile(path.join(__dirname, "../../frontend", "dist", "index.html"));
   });  
 }
 
