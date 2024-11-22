@@ -7,7 +7,7 @@
     "dev": "nodemon src/server.ts",
     "lint": "eslint src --ext .ts",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/src/server.js"
   },
   "keywords": [],
   "type": "module",
